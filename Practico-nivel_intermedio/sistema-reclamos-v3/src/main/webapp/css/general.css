@@ -1,0 +1,18 @@
+.texto-general {
+	font-size: 15px;
+	font-weight: bold;
+	color: blue;
+}
+
+label.error {
+	color: red;
+	font-weight: bold;
+}
+
+input.error {
+	border: solid red thin;
+}
+
+textarea.error {
+	border: solid red thin;
+}
