@@ -2,7 +2,11 @@ package edu.curso.java.integrador.sistemareclamosv3.controller;
 
 import java.util.*;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,15 +39,20 @@ public class ClaimRestController {
 		return claimsDTO;
 	}
 	
-	@GetMapping(path = "/{id}") //URL FINAL ES: /api/reclamos/123456
-	public ClaimDTO retrieveClaimsById(@PathVariable Long id) {
+	@GetMapping(path = "/{id}") //URL FINAL ES: /api/reclamos/ID
+	public ResponseEntity<ClaimDTO> retrieveClaimsById(@PathVariable Long id) {
 		Claim claim = claimService.retrieveClaimsById(id);
-		ClaimDTO claimDTO = new ClaimDTO(claim);
-		return claimDTO;
+		
+		if (claim != null) {
+			ClaimDTO claimDTO = new ClaimDTO(claim);
+			return ResponseEntity.ok(claimDTO);	
+		}
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
 	@PostMapping //URL FINAL ES: /api/reclamos
-	public ClaimDTO newClaimDischarge(@RequestBody ClaimDTO claimDTO) {
+	public ClaimDTO newClaimDischarge(@Valid @RequestBody ClaimDTO claimDTO) {
 		Claim claim = new Claim();
 		claim.setTitleClaim(claimDTO.getTitleDTO());
 		claim.setDescriptionClaim(claimDTO.getDescriptionDTO());
@@ -53,13 +62,13 @@ public class ClaimRestController {
 	}
 	
 	
-	@DeleteMapping(path = "/{id}") //URL FINAL ES: /api/reclamos/123456
+	@DeleteMapping(path = "/{id}") //URL FINAL ES: /api/reclamos/ID
 	public void deletedClaim(@PathVariable Long id) {
 		claimService.deletedClaim(id);	
 	}
 	
-	@PutMapping(path = "/{id}") //URL FINAL ES: /api/reclamos/123456
-	public ClaimDTO newClaimDischarge(@PathVariable Long id, @RequestBody ClaimDTO claimDTO) {
+	@PutMapping(path = "/{id}") //URL FINAL ES: /api/reclamos/ID
+	public ClaimDTO updateClaimDTO(@PathVariable Long id, @Valid @RequestBody ClaimDTO claimDTO) {
 		Claim claim = claimService.retrieveClaimsById(id);
 		claim.setTitleClaim(claimDTO.getTitleDTO());
 		claim.setDescriptionClaim(claimDTO.getDescriptionDTO());

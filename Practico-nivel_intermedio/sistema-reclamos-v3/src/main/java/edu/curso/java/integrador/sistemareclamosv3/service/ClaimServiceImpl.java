@@ -2,6 +2,7 @@ package edu.curso.java.integrador.sistemareclamosv3.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,12 @@ public class ClaimServiceImpl implements ClaimService {
 	
 	@Override
 	public Claim retrieveClaimsById(Long id) {
-		return claimRepository.findById(id).get();
+		Optional<Claim> optionalClaim = claimRepository.findById(id);
+		if(optionalClaim.isPresent()) {
+			return optionalClaim.get();
+		} else {
+			return null;
+		}
 	}
 	
 	@Override

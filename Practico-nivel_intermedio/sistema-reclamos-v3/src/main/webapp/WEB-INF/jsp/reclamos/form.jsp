@@ -19,15 +19,17 @@
 			<div class="mb-3">
 			  <label class="form-label">Título</label>
 			  <form:input cssClass="form-control required" path="titleForm"/>
+			  <form:errors path="titleForm"></form:errors>
 			</div>
 		
 			<div class="mb-3">
 			  <label class="form-label">Descripción</label>
 			  <form:textarea cssClass="form-control required" path="descriptionForm" rows="5" cols="15" />
+			  <form:errors path="descriptionForm"></form:errors>
 			</div>
 		
 		
-			<button class="btn btn-primary" id="buttonEnviar" type="button">Enviar</button>
+			<button class="btn btn-primary" id="buttonEnviar" type="submit">Enviar</button>
 			<button class="btn btn-warning" id="buttonCancelar" type="button">Cancelar</button>
 
 		</div>
@@ -38,13 +40,13 @@
 			console.log('Listo término de cargar todo el html de la página....');
 			
 			
-			$('#buttonEnviar').on('click', function() {
+			/*$('#buttonEnviar').on('click', function() {
 				if($('#formReclamo').valid() == true) {
 					$('#formReclamo').submit();
 				} else {
 					bootbox.alert('Por favor completar los campos que faltan....');
 				}
-			});
+			});*/
 			
 			$('#buttonCancelar').on('click', function() {
 				history.back();

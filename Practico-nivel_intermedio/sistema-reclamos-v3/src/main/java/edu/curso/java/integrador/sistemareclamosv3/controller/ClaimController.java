@@ -2,9 +2,12 @@ package edu.curso.java.integrador.sistemareclamosv3.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,7 +61,12 @@ public class ClaimController {
 	}
 
 	@RequestMapping(value = "/guardar", method = RequestMethod.POST)
-	public String saveClaim(Model model, ClaimForm claimForm) {
+	public String saveClaim(Model model, @Valid ClaimForm claimForm, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			return "/reclamos/form";
+		}
+		
 		Long idCurrent = claimForm.getIdForm();
 		
 		if(idCurrent == null) {
